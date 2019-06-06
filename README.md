@@ -6,6 +6,7 @@ Provides, as a convenience:
 * Service provider to generate clients.
 * Facade for the service provider.
 * Publishable configuration file.
+* Multiple configurations, with a default.
 * Example environment variables.
 * Installation documentation.
 * Usage examples.
