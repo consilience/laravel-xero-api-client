@@ -8,6 +8,7 @@ Provides, as a convenience:
 * Publishable configuration file.
 * Multiple configurations, with a default.
 * Example environment variables.
+* Covers HTTP communications only; the endpoints and models are handled in other packages of generated code (possibly).
 * Installation documentation.
 * Usage examples.
 
