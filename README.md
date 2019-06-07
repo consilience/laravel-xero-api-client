@@ -14,3 +14,21 @@ Although only Xero Partner applications are supported at present, the configurat
 will separate settings by application type.
 
 Treat the above as a TODO list until DONE.
+
+
+## Installation
+
+### Laravel
+
+TODO
+
+### Lumen
+
+    $app->register(Consilience\XeroApi\LaravelClient\ClientServiceProvider::class);
+    class_alias(Consilience\XeroApi\LaravelClient\ClientServiceFacade::class, 'XeroClient');
+    $app->configure('xero-api-client');
+
+and
+
+    cp vendor/consilience/laravel-xero-api-client/config/xero-api-client.php config/
+

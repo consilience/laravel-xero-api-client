@@ -1,0 +1,39 @@
+{
+    "name": "consilience/laravel-xero-api-client",
+    "description": "A Xero API client for Laravel/Lumen",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jason Judge",
+            "email": "jason.judge@consil.co.uk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Consilience\\XeroApi\\LaravelClient\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "psr/http-client": "^1.0@dev",
+        "php-http/message": "^1.6@dev",
+        "consilience/xero-api-client": "*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Consilience\\XeroApi\\LaravelClient\\ClientServiceProvider"
+            ],
+            "aliases": {
+                "XeroClient": "Consilience\\XeroApi\\LaravelClient\\ClientServiceFacade"
+            }
+        }
+    },
+    "repositories" : [
+        {
+            "type": "vcs",
+            "url": "git@github.com:consilience/xero-api-client.git"
+        }
+    ]
+}
