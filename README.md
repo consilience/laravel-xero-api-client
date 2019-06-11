@@ -137,3 +137,26 @@ to create the request messages, send the requests, and parse the response
 into models.
 That package would use the `$applicationClient` set up here to handle the communications.
 
+The package can be found here https://github.com/consilience/xero-api-sdk and the equivalent to
+the above manual "organisations" request is very simple:
+
+```php
+$configuration = new Consilience\Xero\AccountingSdk\Configuration([
+    'syncClient' => $applicationClient,
+]);
+$accountingApi = new \Consilience\Xero\AccountingSdk\Api\AccountingApi($configuration);
+
+$result = $accountingApi->getOrganisations();
+```
+
+`$result` will be an `Consilience\Xero\AccountingSdk\Model\Organisations` object, with
+and single `Consilience\Xero\AccountingSdk\Model\Organisation` object and further embedded
+objects as appropriate for multiple addresses (`Consilience\Xero\AccountingSdk\Model\Address`)
+and payment terms (`Consilience\Xero\AccountingSdk\Model\PaymentTerm`) etc.
+
+Note that the endpoint URL is *organisation* (singular) but the operation and hence
+the method is *organisations* (plural).
+The API actually returns an array containing a single organisation, so the plural
+name is more correct and future-proof, and the OpenAPI spec deals with this name-mismatch
+for us; we don't care about the URLs and just use the operation functions.
+
