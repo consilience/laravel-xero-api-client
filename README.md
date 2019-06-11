@@ -36,6 +36,12 @@ and
 
 ## Basic Use
 
+These steps assume the user has authenticated your app, and the authentication
+details have been stored by `MyStorageClass`.
+The initial authorisation process is supported by package
+`https://github.com/consilience/xero-api-client`, but you can take the user through
+that process any way you like, so long as you collect the token details at the end.
+
 Create an OAuth1 token object with the current saved authentication details.
 
 ```php
