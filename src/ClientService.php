@@ -70,7 +70,7 @@ class ClientService
 
         $config = $this->getAppConfig($appKey);
 
-        if ($config['type'] === 'partner') {
+        if ($config['type'] === ClientServiceProvider::APP_TYPE_PARTNER) {
             return $this->clients[$appKey] = new Partner(
                 $oauthToken,
                 $config,
@@ -89,7 +89,7 @@ class ClientService
     {
         $config = $this->getAppConfig($appKey);
 
-        if ($config['auth_type'] === 'oauth1') {
+        if ($config['auth_type'] === ClientServiceProvider::AUTH_TYPE_OAUTH1) {
             $token = new Oauth1Token($authDetails);
 
             $guardTimeSeconds = config(ClientServiceProvider::CONFIG_FILE . '.guard_time_seconds');

@@ -13,6 +13,13 @@ class ClientServiceProvider extends ServiceProvider
     const CONTAINER_KEY = 'Consilience\XeroApi\LaravelClient\ClientService';
     const CONFIG_FILE = 'xero-api-client';
 
+    const APP_TYPE_PARTNER = 'partner';
+    const APP_TYPE_PRIVATE = 'private';
+    const APP_TYPE_PUBLIC = 'public';
+
+    const AUTH_TYPE_OAUTH1 = 'oauth1';
+    const AUTH_TYPE_OAUTH2 = 'oauth2';
+
     public function boot()
     {
         $this->publishes([
