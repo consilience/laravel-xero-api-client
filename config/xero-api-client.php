@@ -7,7 +7,7 @@ return [
 
     // Application name, user agent sent to Xero.
 
-    'application_name' => 'Laravel Xero',
+    'application_name' => env('XERO_APPLICATION_NAME', 'Laravel Xero'),
 
     // Guard time in seconds.
     // 300 secons = 5 minutes.
