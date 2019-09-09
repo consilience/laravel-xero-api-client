@@ -9,6 +9,7 @@ namespace Consilience\XeroApi\LaravelClient;
 use Consilience\XeroApi\Client\OauthTokenInterface;
 use Psr\Http\Client\ClientInterface;
 use Consilience\XeroApi\Client\App\Partner;
+use Consilience\XeroApi\Client\App\AppPrivate;
 use Consilience\XeroApi\Client\Oauth1\Token as Oauth1Token;
 
 class ClientService
@@ -78,6 +79,14 @@ class ClientService
             );
         }
 
+        if ($config['type'] === ClientServiceProvider::APP_TYPE_PRIVATE) {
+            return $this->clients[$appKey] = new AppPrivate(
+                $oauthToken,
+                $config,
+                $baseClient
+            );
+        }
+
         // Config not supported yet.
     }
 
@@ -89,7 +98,9 @@ class ClientService
     {
         $config = $this->getAppConfig($appKey);
 
-        if ($config['auth_type'] === ClientServiceProvider::AUTH_TYPE_OAUTH1) {
+        if ($config['auth_type'] === ClientServiceProvider::AUTH_TYPE_OAUTH1
+            && $config['type'] === ClientServiceProvider::APP_TYPE_PARTNER
+        ) {
             $token = new Oauth1Token($authDetails);
 
             $guardTimeSeconds = config(ClientServiceProvider::CONFIG_FILE . '.guard_time_seconds');
@@ -97,6 +108,16 @@ class ClientService
             if ($guardTimeSeconds) {
                 $token = $token->withGuardTimeSeconds();
             }
+
+            return $token;
+        }
+
+        if ($config['auth_type'] === ClientServiceProvider::AUTH_TYPE_OAUTH1
+            && $config['type'] === ClientServiceProvider::APP_TYPE_PRIVATE
+        ) {
+            $token = new Oauth1Token([
+                'oauth_token' => $config['consumer_key'],
+            ]);
 
             return $token;
         }
