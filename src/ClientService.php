@@ -39,7 +39,19 @@ class ClientService
     {
         $appKey = $this->defaultAppKey($appKey);
 
-        $config = config(ClientServiceProvider::CONFIG_FILE . '.apps.' . $appKey, []);
+        // If the app key has parts separated by dots, then take just the first part.
+        // This allows it to be used both as a cache key and a config root.
+
+        if (strpos($appKey, '.') !== null) {
+            [$appKey] = explode('.', $appKey, 2);
+        }
+
+        $config = config(sprintf(
+            '%s.%s.%s',
+            ClientServiceProvider::CONFIG_FILE,
+            'apps',
+            $appKey
+        ), []);
 
         // Any non-absolute pathname (not starting with a '/') is treated
         // as relative to the app base directory.
@@ -56,6 +68,10 @@ class ClientService
 
     /**
      * Return a PSR-18 application client, handling OAuth and token renewals.
+     * Everything before the first '.' of $appKey will be treated as the config
+     * base key. The complete $appKey is used as an array cache key.
+     *
+     * @param string $appKey config base and local cache key
      */
     public function getClient(
         OauthTokenInterface $oauthToken,
@@ -98,6 +114,8 @@ class ClientService
     {
         $config = $this->getAppConfig($appKey);
 
+        // OAuth 1.0a partner app.
+
         if ($config['auth_type'] === ClientServiceProvider::AUTH_TYPE_OAUTH1
             && $config['type'] === ClientServiceProvider::APP_TYPE_PARTNER
         ) {
@@ -111,6 +129,8 @@ class ClientService
 
             return $token;
         }
+
+        // OAuth 1.0a private app.
 
         if ($config['auth_type'] === ClientServiceProvider::AUTH_TYPE_OAUTH1
             && $config['type'] === ClientServiceProvider::APP_TYPE_PRIVATE
