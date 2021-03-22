@@ -1,3 +1,6 @@
+
+# THIS PACKAGED IS OUTDATED - BUILT FOR THE OAUTH 1.0A API
+
 # laravel-xero-api-client
 Laravel/Lumen provider for consilience/xero-api-client
 
